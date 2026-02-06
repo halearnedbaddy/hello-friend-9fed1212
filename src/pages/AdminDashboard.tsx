@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HomeIcon, UsersIcon, AlertTriangleIcon, ActivityIcon, SettingsIcon, LogOutIcon, StoreIcon, LinkIcon, MenuIcon, XIcon, WalletIcon } from '@/components/icons';
-import { Key } from 'lucide-react';
+import { Key, CreditCard } from 'lucide-react';
 import { AdminOverview } from '@/components/admin/AdminOverview';
 import { AdminTransactions } from '@/components/admin/AdminTransactions';
 import { AdminDisputes } from '@/components/admin/AdminDisputes';
@@ -12,6 +12,7 @@ import { AdminSettings } from '@/components/admin/AdminSettings';
 import { AdminIntegrations } from '@/components/admin/AdminIntegrations';
 import { AdminNotificationCenter } from '@/components/admin/AdminNotificationCenter';
 import { AdminEscrow } from '@/components/admin/AdminEscrow';
+import { AdminPendingPayments } from '@/components/admin/AdminPendingPayments';
 import { useSupabaseAuth } from '@/contexts/SupabaseAuthContext';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -19,7 +20,7 @@ export function AdminDashboard() {
   const navigate = useNavigate();
   const { t } = useTranslations();
   const { user, logout } = useSupabaseAuth() ?? {};
-  const [activeTab, setActiveTab] = useState<'overview' | 'transactions' | 'escrow' | 'disputes' | 'users' | 'settings' | 'stores' | 'social' | 'integrations'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'transactions' | 'pending_payments' | 'escrow' | 'disputes' | 'users' | 'settings' | 'stores' | 'social' | 'integrations'>('overview');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogout = async () => {
@@ -30,6 +31,7 @@ export function AdminDashboard() {
   const navItems = [
     { id: 'overview', label: t('admin.overview'), icon: HomeIcon },
     { id: 'transactions', label: t('admin.transactions'), icon: ActivityIcon },
+    { id: 'pending_payments', label: 'Pending Payments', icon: CreditCard },
     { id: 'escrow', label: 'Escrow', icon: WalletIcon },
     { id: 'disputes', label: t('admin.disputes'), icon: AlertTriangleIcon },
     { id: 'users', label: t('admin.userManagement'), icon: UsersIcon },
@@ -125,7 +127,7 @@ export function AdminDashboard() {
               <MenuIcon size={20} />
             </button>
             <h1 className="text-lg font-semibold text-[#3d1a7a] capitalize">
-              {activeTab === 'users' ? 'User Management' : activeTab === 'social' ? 'Social Pages' : activeTab}
+              {activeTab === 'users' ? 'User Management' : activeTab === 'social' ? 'Social Pages' : activeTab === 'pending_payments' ? 'Pending Payments' : activeTab}
             </h1>
           </div>
           <AdminNotificationCenter />
@@ -136,6 +138,7 @@ export function AdminDashboard() {
           <div className="max-w-7xl mx-auto">
             {activeTab === 'overview' && <AdminOverview />}
             {activeTab === 'transactions' && <AdminTransactions />}
+            {activeTab === 'pending_payments' && <AdminPendingPayments />}
             {activeTab === 'escrow' && <AdminEscrow />}
             {activeTab === 'disputes' && <AdminDisputes />}
             {activeTab === 'users' && <AdminUsers />}
