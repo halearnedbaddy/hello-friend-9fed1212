@@ -2,7 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') || '';
@@ -38,13 +38,14 @@ Deno.serve(async (req) => {
       if (user) {
         userId = user.id;
         
-        // Check if admin
+        // Check if admin (user may have multiple roles, so check for any admin role)
         const { data: roleData } = await serviceClient
           .from('user_roles')
           .select('role')
           .eq('user_id', userId)
-          .single();
-        isAdmin = roleData?.role === 'admin';
+          .eq('role', 'admin')
+          .maybeSingle();
+        isAdmin = !!roleData;
       }
     }
 
