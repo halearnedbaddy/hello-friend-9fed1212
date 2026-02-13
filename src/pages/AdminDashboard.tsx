@@ -58,7 +58,7 @@ export function AdminDashboard() {
           <div className="flex items-center justify-center w-full">
             <img 
               src="/logo.jpeg" 
-              alt="PayLoom Logo" 
+              alt="Halearnedu Web Logo" 
               className="w-40 h-auto object-contain"
             />
           </div>

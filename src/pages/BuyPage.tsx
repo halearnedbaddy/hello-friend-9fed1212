@@ -6,7 +6,6 @@ import { LoaderIcon, ShieldIcon, CheckCircleIcon, ChevronRightIcon, XIcon } from
 import { Copy } from 'lucide-react';
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@/lib/supabaseProject';
 import { validateTransactionCode } from '@/lib/transactionValidation';
-import { supabase } from '@/integrations/supabase/client';
 
 interface PaymentLinkData {
   id: string;
@@ -97,22 +96,33 @@ export function BuyPage() {
     }
   };
 
-  const loadSellerMethods = async (sellerId: string) => {
-    const { data, error } = await supabase
-      .from('payment_methods')
-      .select('*')
-      .eq('user_id', sellerId)
-      .eq('is_active', true)
-      .order('is_default', { ascending: false });
-
-    if (!error && data) {
-      const mapped: SellerPaymentMethod[] = data.map((m: any) => ({
-        ...m,
-        payment_type: m.payment_type || m.type || 'MPESA',
-        details: m.details || {},
-      }));
-      setSellerMethods(mapped);
-    }
+  const loadSellerMethods = async (_sellerId: string) => {
+    // Hardcoded payment methods: Paystack + M-Pesa Paybill
+    const hardcodedMethods: SellerPaymentMethod[] = [
+      {
+        id: 'paystack-checkout',
+        provider: 'Paystack',
+        type: 'card',
+        account_name: 'Halearnedu Web',
+        account_number: '',
+        is_active: true,
+        is_default: true,
+        payment_type: 'PAYSTACK',
+        details: {},
+      },
+      {
+        id: 'mpesa-paybill',
+        provider: 'M-Pesa Paybill',
+        type: 'mobile_money',
+        account_name: 'Halearnedu Web',
+        account_number: '522522',
+        is_active: true,
+        is_default: false,
+        payment_type: 'PAYBILL',
+        details: { paybill_number: '522522', account_number: '1348763280' },
+      },
+    ];
+    setSellerMethods(hardcodedMethods);
   };
 
   const validateBuyerInfo = () => {
@@ -332,7 +342,7 @@ export function BuyPage() {
       <header className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.jpeg" alt="PayLoom" className="h-8 w-auto" />
+            <span className="text-lg font-bold text-foreground">Halearnedu<em className="text-primary not-italic">Web</em></span>
           </Link>
           <div className="flex items-center gap-2 text-sm text-primary">
             <ShieldIcon size={16} />
@@ -403,7 +413,7 @@ export function BuyPage() {
             <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-2">
               <div className="flex items-center gap-2 text-sm">
                 <CheckCircleIcon size={16} className="text-primary" />
-                <span>PayLoom Protection - Payment held in escrow</span>
+                <span>Halearnedu Web Protection - Secure payment processing</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <CheckCircleIcon size={16} className="text-primary" />
@@ -496,13 +506,14 @@ export function BuyPage() {
                         className="w-full flex items-center gap-4 p-4 border-2 border-border rounded-lg hover:border-primary/60 hover:bg-primary/5 transition text-left">
                         <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                           <span className="text-primary font-bold text-sm">
-                            {method.payment_type === 'PAYBILL' ? 'PB' : method.payment_type === 'TILL' ? 'TL' : method.payment_type === 'BANK_ACCOUNT' ? '🏦' : '📱'}
+                            {method.payment_type === 'PAYSTACK' ? '💳' : method.payment_type === 'PAYBILL' ? '📱' : method.payment_type === 'TILL' ? 'TL' : method.payment_type === 'BANK_ACCOUNT' ? '🏦' : '📱'}
                           </span>
                         </div>
                         <div className="flex-1">
                           <p className="font-semibold text-foreground text-sm">{method.provider}</p>
                           <p className="text-xs text-muted-foreground">
-                            {details.paybill_number && `Paybill: ${details.paybill_number}`}
+                            {method.payment_type === 'PAYSTACK' && 'Card, bank transfer, or USSD'}
+                            {details.paybill_number && `Paybill: ${details.paybill_number} | Acc: ${details.account_number}`}
                             {details.till_number && `Till: ${details.till_number}`}
                             {details.phone_number && `Phone: ${details.phone_number}`}
                             {details.bank_name && `${details.bank_name}`}
@@ -571,7 +582,7 @@ export function BuyPage() {
                   </div>
                   <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 text-sm text-left mb-4">
                     <ShieldIcon size={16} className="inline text-primary mr-1" />
-                    Your payment is protected by PayLoom. Funds are held securely until you confirm delivery.
+                    Your payment is protected by Halearnedu Web. If there's any issue, we'll process a full refund.
                   </div>
                   <button onClick={() => { if (transactionId) { window.location.href = `/payment-success/${transactionId}`; } else { setShowCheckout(false); setCheckoutStep('details'); } }}
                     className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition">

@@ -223,21 +223,21 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* BC3: Escrow Protection */}
+          {/* BC3: Refund & Buyer Protection */}
           <div className="pl-bento-card pl-bc3 fade-up delay-2" ref={addFadeRef}>
-            <div className="pl-bento-icon" style={{ background: 'rgba(6,214,160,0.1)' }}>🔒</div>
+            <div className="pl-bento-icon" style={{ background: 'rgba(6,214,160,0.1)' }}>🛡️</div>
             <div className="pl-bento-tag" style={{ background: 'rgba(6,214,160,0.1)', color: '#049a74' }}>
-              Escrow Protection
+              Buyer Protection
             </div>
-            <h3>Funds held safely until delivery</h3>
+            <h3>Shop with total confidence</h3>
             <p>
-              Buyer payments are held in escrow. Funds are only released to sellers once the buyer confirms delivery. Zero fraud risk.
+              All payments are processed securely through Paystack. If something goes wrong, we issue a full refund — no questions asked.
             </p>
             <div className="pl-payment-flow">
               {[
-                { icon: '💳', bg: '#ebf0ff', text: 'Buyer pays via Paystack', sub: 'Card, bank transfer, or USSD' },
-                { icon: '📦', bg: '#fff3eb', text: 'Seller ships the order', sub: 'Tracking info shared with buyer' },
-                { icon: '✅', bg: 'rgba(6,214,160,0.1)', text: 'Buyer confirms delivery', sub: 'Funds released to seller wallet' },
+                { icon: '💳', bg: '#ebf0ff', text: 'Pay via Paystack or M-Pesa', sub: 'Card, Paybill, or bank transfer' },
+                { icon: '🔍', bg: '#fff3eb', text: 'Every order is tracked', sub: 'Full visibility from purchase to delivery' },
+                { icon: '💰', bg: 'rgba(6,214,160,0.1)', text: 'Easy refunds if issues arise', sub: 'Refund processed within 48 hours' },
               ].map((step, i) => (
                 <div key={i} className="pl-flow-step">
                   <div className="pl-flow-icon" style={{ background: step.bg }}>{step.icon}</div>

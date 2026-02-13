@@ -169,7 +169,7 @@ export function PaymentSuccessPage() {
           </CardContent>
         </Card>
         <div className="mt-6 text-center text-sm text-muted-foreground">
-          Powered by PayLoom • Secure Payment Processing
+          Powered by Halearnedu Web • Secure Payment Processing
         </div>
       </div>
     </div>
