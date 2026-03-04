@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: hsl(230, 25%, 15%);
+  background: hsl(0, 0%, 100%);
+}
+
+/* Animated gradient background */
+.hero-gradient {
+  background: linear-gradient(135deg, hsl(235, 69%, 61%) 0%, hsl(262, 52%, 47%) 50%, hsl(280, 60%, 45%) 100%);
+}
+
+.hero-gradient-soft {
+  background: linear-gradient(135deg, hsl(240, 100%, 98%) 0%, hsl(262, 80%, 96%) 50%, hsl(228, 90%, 97%) 100%);
+}
+
+.cta-gradient {
+  background: linear-gradient(135deg, hsl(230, 25%, 10%) 0%, hsl(262, 40%, 18%) 100%);
+}
+
+/* Glass effect */
+.glass {
+  background: hsla(0, 0%, 100%, 0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid hsla(0, 0%, 100%, 0.12);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-delayed { animation: float 6s ease-in-out 2s infinite; }
+.animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+
+/* Section reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Code block styling */
+.code-block {
+  background: hsl(230, 25%, 10%);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.code-block pre {
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.code-block code {
+  color: hsl(210, 20%, 80%);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+.code-comment { color: hsl(120, 30%, 55%); }
+.code-keyword { color: hsl(280, 80%, 70%); }
+.code-string { color: hsl(40, 90%, 65%); }
+.code-fn { color: hsl(200, 90%, 70%); }
+.code-number { color: hsl(30, 90%, 65%); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(230, 15%, 75%); border-radius: 3px; }
