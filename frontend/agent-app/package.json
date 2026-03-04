@@ -1,0 +1,18 @@
+{
+  "name": "payloom-agent-app",
+  "version": "1.0.0",
+  "description": "PayLoom Agent App - React Native",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "^0.71.0",
+    "@react-navigation/native": "^6.0.0",
+    "@react-navigation/bottom-tabs": "^6.0.0",
+    "axios": "^1.4.0"
+  }
+}
