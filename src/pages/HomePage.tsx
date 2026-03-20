@@ -174,9 +174,9 @@ export default function HomePage() {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <a href="#" className="text-sm font-medium text-brand-700 hover:text-brand-500 transition">Log in</a>
-            <a href="#" className="text-sm font-semibold px-5 py-2.5 rounded-full bg-brand-600 text-white hover:bg-brand-700 transition shadow-lg shadow-brand-600/20">
-              Get API Access
+            <a href="/auth" className="text-sm font-medium text-brand-700 hover:text-brand-500 transition">Log in</a>
+            <a href="/auth" className="text-sm font-semibold px-5 py-2.5 rounded-full bg-brand-600 text-white hover:bg-brand-700 transition shadow-lg shadow-brand-600/20">
+              Get Started
             </a>
           </div>
 
