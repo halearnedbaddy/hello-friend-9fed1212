@@ -108,6 +108,7 @@ export default function POSPage() {
       }
 
       const receipt = {
+        id: crypto.randomUUID(),
         items: cart,
         subtotal,
         tax,
@@ -118,6 +119,12 @@ export default function POSPage() {
         timestamp: new Date().toISOString(),
         receiptNumber: `PL-${Date.now().toString(36).toUpperCase()}`,
       };
+
+      // Save receipt to localStorage
+      const stored = localStorage.getItem(`receipts_${user?.id}`);
+      const existing = stored ? JSON.parse(stored) : [];
+      existing.unshift(receipt);
+      localStorage.setItem(`receipts_${user?.id}`, JSON.stringify(existing.slice(0, 500)));
 
       setLastReceipt(receipt);
       setCart([]);
